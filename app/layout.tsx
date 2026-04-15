@@ -5,6 +5,7 @@ import Link from "next/link";
 import QueryProvider from "@/components/QueryProvider";
 import { Suspense } from "react";
 import DatePicker from "@/components/DatePicker";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,6 +24,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${geistSans.variable} h-full antialiased`}>
+      <head>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2247400586882906"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className="h-full flex flex-col bg-gray-50 text-gray-900">
         <QueryProvider>
           <header className="bg-white border-b border-gray-200 px-6 py-3 flex items-center gap-6 shadow-sm">
