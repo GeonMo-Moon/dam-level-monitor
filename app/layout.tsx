@@ -36,6 +36,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://damlevelmonitor.vercel.app",
   },
+  verification: {
+    google: "35XWpbXc-V-a7791-yjc8J7HgTkgtyQuOd0vY5onBQw",
+  },
 };
 
 export default function RootLayout({
