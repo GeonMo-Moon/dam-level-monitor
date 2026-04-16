@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { getDamsWithWaterLevel } from "@/lib/get-dams";
 import StatusBadge from "@/components/StatusBadge";
 import StorageGauge from "@/components/StorageGauge";
@@ -7,6 +8,26 @@ import DamCompareCard from "@/components/WaterLevelChart";
 import { daysForKorea, formatSupply } from "@/lib/water-usage";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ damcode: string }>;
+}): Promise<Metadata> {
+  const { damcode } = await params;
+  const damnm = decodeURIComponent(damcode);
+  return {
+    title: `${damnm} 수위 현황`,
+    description: `${damnm}의 실시간 수위, 저수율, 유입량, 방류량을 확인합니다.`,
+    alternates: {
+      canonical: `https://damlevelmonitor.vercel.app/dams/${damcode}`,
+    },
+    openGraph: {
+      title: `${damnm} 수위 현황`,
+      description: `${damnm}의 실시간 수위, 저수율, 유입량, 방류량을 확인합니다.`,
+    },
+  };
+}
 
 export default async function DamDetailPage({
   params,

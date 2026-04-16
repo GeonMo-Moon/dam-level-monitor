@@ -13,8 +13,29 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "대한민국 댐 수위 모니터",
-  description: "전국 댐의 수위, 저수율, 유입량, 방류량을 실시간으로 확인합니다.",
+  title: {
+    default: "대한민국 댐 수위 모니터",
+    template: "%s | 댐 수위 모니터",
+  },
+  description: "전국 21개 다목적댐의 수위, 저수율, 유입량, 방류량을 실시간으로 확인합니다. 소양강댐, 충주댐, 안동댐 등 K-water 공공데이터 기반.",
+  keywords: ["댐 수위", "저수율", "다목적댐", "소양강댐", "충주댐", "안동댐", "K-water", "댐 현황", "저수량"],
+  authors: [{ name: "댐 수위 모니터" }],
+  metadataBase: new URL("https://damlevelmonitor.vercel.app"),
+  openGraph: {
+    title: "대한민국 댐 수위 모니터",
+    description: "전국 21개 다목적댐의 수위, 저수율, 유입량, 방류량을 실시간으로 확인합니다.",
+    url: "https://damlevelmonitor.vercel.app",
+    siteName: "댐 수위 모니터",
+    locale: "ko_KR",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://damlevelmonitor.vercel.app",
+  },
 };
 
 export default function RootLayout({
