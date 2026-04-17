@@ -17,7 +17,6 @@ No test runner is configured.
 ## Environment Variables
 
 - `KWATER_SERVICE_KEY` — K-water 공공데이터 API 인증키 (server-side only)
-- `NEXT_PUBLIC_NAVER_MAP_CLIENT_ID` — 네이버 클라우드 플랫폼 Maps API 키
 
 ## Architecture
 
@@ -30,9 +29,9 @@ No test runner is configured.
 - `/dams` — sortable dam list table
 - `/dams/[damcode]` — detail page; `damcode` is `encodeURIComponent(damnm)`
 
-**Map**: `MapTabs` renders both maps simultaneously using `visibility: hidden` (not `display: none`) so each map initializes with real dimensions. Tab switch triggers resize: Leaflet via `map.invalidateSize()`, Naver via `naver.maps.Event.trigger(map, "resize")`. Leaflet uses react-leaflet v5; Naver Maps SDK is loaded dynamically via script injection with `ncpKeyId` param.
+**Map**: Uses OpenStreetMap (react-leaflet v5) via `DamMapClient.tsx` (dynamic, `ssr: false`). Rendered inside `HomeClient.tsx` with `visible` always true. Marker click opens `DamSidePanel`.
 
-**Client component pattern**: Map components need `"use client"` + `ssr: false` dynamic import. Pattern: `NaverMap.tsx` (logic) → `NaverMapClient.tsx` (dynamic wrapper) → used in `MapTabs.tsx`.
+**Client component pattern**: Map components need `"use client"` + `ssr: false` dynamic import. Pattern: `DamMap.tsx` (logic) → `DamMapClient.tsx` (dynamic wrapper) → used in `HomeClient.tsx`.
 
 **Status colors**: Defined in `components/StatusBadge.tsx` `getStatusInfo()` — used by both map popups and the table/detail pages. Change thresholds there to affect the whole app.
 

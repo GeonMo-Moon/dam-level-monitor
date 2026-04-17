@@ -6,7 +6,6 @@
 
 ```
 KWATER_SERVICE_KEY=<K-water 공공데이터 API 인증키>
-NEXT_PUBLIC_NAVER_MAP_CLIENT_ID=<네이버 클라우드 플랫폼 Maps API 키>
 ```
 
 ## 실행
