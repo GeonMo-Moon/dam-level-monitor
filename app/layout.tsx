@@ -45,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${geistSans.variable} h-full antialiased`}>
+    <html lang="ko" className={`${geistSans.variable} h-full antialiased`} style={{ colorScheme: "light" }}>
       <head>
         <Script
           async
