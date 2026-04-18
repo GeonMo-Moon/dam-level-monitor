@@ -41,12 +41,16 @@ export default function DamListTable({ dams }: DamListTableProps) {
   const [query, setQuery] = useState("");
   const [sortKey, setSortKey] = useState<SortKey>("rsvrt");
   const [sortAsc, setSortAsc] = useState(true);
-  const [view, setView] = useState<ViewMode>("table");
+  const [view, setView] = useState<ViewMode>("card");
 
-  // Restore saved view preference
+  // 저장된 뷰 복원 — 없으면 모바일은 카드, 데스크톱은 테이블
   useEffect(() => {
     const saved = localStorage.getItem(VIEW_KEY);
-    if (saved === "card" || saved === "table") setView(saved);
+    if (saved === "card" || saved === "table") {
+      setView(saved);
+    } else if (window.innerWidth >= 640) {
+      setView("table");
+    }
   }, []);
 
   function switchView(v: ViewMode) {
@@ -82,13 +86,13 @@ export default function DamListTable({ dams }: DamListTableProps) {
   return (
     <div>
       {/* Toolbar */}
-      <div className="flex items-center gap-3 mb-4">
+      <div className="flex items-center gap-2 mb-4">
         <input
           type="text"
           placeholder="댐 이름, 지역, 수계 검색..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+          className="w-full max-w-sm px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
         />
         <div className="ml-auto flex items-center gap-1 bg-gray-100 rounded-lg p-1">
           <button
@@ -117,49 +121,50 @@ export default function DamListTable({ dams }: DamListTableProps) {
           <table className="min-w-full text-sm">
             <thead className="bg-gray-50 text-gray-600">
               <tr>
-                <th className="px-4 py-3 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort("damnm")}>
+                <th className="px-3 sm:px-4 py-3 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort("damnm")}>
                   댐 이름 <SortIcon k="damnm" />
                 </th>
-                <th className="px-4 py-3 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort("suge")}>
+                {/* 수계/지역 — 모바일 숨김 */}
+                <th className="hidden sm:table-cell px-4 py-3 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort("suge")}>
                   수계 <SortIcon k="suge" />
                 </th>
-                <th className="px-4 py-3 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort("region")}>
+                <th className="hidden sm:table-cell px-4 py-3 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort("region")}>
                   지역 <SortIcon k="region" />
                 </th>
-                <th className="px-4 py-3 text-right cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort("rsvrt")}>
+                <th className="px-3 sm:px-4 py-3 text-right cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort("rsvrt")}>
                   저수율 <SortIcon k="rsvrt" />
                 </th>
-                <th className="px-4 py-3 text-right cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort("nowlowlevel")}>
+                <th className="hidden sm:table-cell px-4 py-3 text-right cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort("nowlowlevel")}>
                   수위 (EL.m) <SortIcon k="nowlowlevel" />
                 </th>
-                <th className="px-4 py-3 text-right">유입량 (㎥/s)</th>
-                <th className="px-4 py-3 text-right">방류량 (㎥/s)</th>
-                <th className="px-4 py-3 text-right">전국민 공급</th>
-                <th className="px-4 py-3"></th>
+                <th className="hidden sm:table-cell px-4 py-3 text-right">유입량 (㎥/s)</th>
+                <th className="hidden sm:table-cell px-4 py-3 text-right">방류량 (㎥/s)</th>
+                <th className="hidden sm:table-cell px-4 py-3 text-right">전국민 공급</th>
+                <th className="px-3 sm:px-4 py-3"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filtered.map((dam) => (
                 <tr key={dam.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-4 py-3 font-medium text-gray-900">{dam.damnm}</td>
-                  <td className="px-4 py-3 text-gray-500">{dam.suge}</td>
-                  <td className="px-4 py-3 text-gray-500">{dam.region}</td>
-                  <td className="px-4 py-3">
+                  <td className="px-3 sm:px-4 py-3 font-medium text-gray-900">{dam.damnm}</td>
+                  <td className="hidden sm:table-cell px-4 py-3 text-gray-500">{dam.suge}</td>
+                  <td className="hidden sm:table-cell px-4 py-3 text-gray-500">{dam.region}</td>
+                  <td className="px-3 sm:px-4 py-3">
                     <ProgressBar rsvrt={dam.current?.rsvwtrt ?? null} />
                   </td>
-                  <td className="px-4 py-3 text-right text-gray-700">
+                  <td className="hidden sm:table-cell px-4 py-3 text-right text-gray-700">
                     {dam.current?.nowlowlevel ?? "-"}
                   </td>
-                  <td className="px-4 py-3 text-right text-gray-700">
+                  <td className="hidden sm:table-cell px-4 py-3 text-right text-gray-700">
                     {dam.current?.inflowqy ?? "-"}
                   </td>
-                  <td className="px-4 py-3 text-right text-gray-700">
+                  <td className="hidden sm:table-cell px-4 py-3 text-right text-gray-700">
                     {dam.current?.totdcwtrqy ?? "-"}
                   </td>
-                  <td className="px-4 py-3 text-right text-blue-600 font-medium text-xs">
+                  <td className="hidden sm:table-cell px-4 py-3 text-right text-blue-600 font-medium text-xs">
                     {formatSupply(daysForKorea(dam.current?.nowrsvwtqy ?? null))}
                   </td>
-                  <td className="px-4 py-3 text-right">
+                  <td className="px-3 sm:px-4 py-3 text-right">
                     <Link
                       href={`/dams/${encodeURIComponent(dam.damnm)}`}
                       className="text-blue-600 hover:underline text-xs"

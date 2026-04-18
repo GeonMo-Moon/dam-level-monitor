@@ -50,6 +50,23 @@ body {
   line-height: 26px !important;
 }
 
+/* 모바일 터치: Leaflet 줌 버튼 크게 */
+@media (max-width: 639px) {
+  .leaflet-control-zoom a {
+    width: 36px !important;
+    height: 36px !important;
+    line-height: 36px !important;
+    font-size: 18px !important;
+  }
+}
+
+/* iOS safe area */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
 .dam-label {
   background: rgba(0, 0, 0, 0.65) !important;
   border: none !important;

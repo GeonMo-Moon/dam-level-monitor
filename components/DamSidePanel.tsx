@@ -16,31 +16,50 @@ export default function DamSidePanel({ dam, onClose }: DamSidePanelProps) {
 
   return (
     <>
-      {/* Backdrop (mobile) */}
+      {/* Backdrop */}
       {open && (
         <div
-          className="absolute inset-0 bg-black/20 z-[400] sm:hidden"
+          className="fixed sm:absolute inset-0 bg-black/30 z-[400]"
           onClick={onClose}
         />
       )}
 
-      {/* Panel */}
+      {/* Panel
+          모바일: 화면 하단 바텀시트 (fixed, 75vh, 위로 슬라이드)
+          데스크톱: 오른쪽 사이드패널 (absolute, w-80, 오른쪽에서 슬라이드)
+      */}
       <div
-        className={`absolute top-0 right-0 h-full w-80 bg-white shadow-2xl z-[500] flex flex-col
+        className={`
+          fixed sm:absolute
+          bottom-0 sm:bottom-auto sm:top-0 sm:right-0
+          left-0 right-0 sm:left-auto
+          h-[78vh] sm:h-full
+          w-full sm:w-80
+          rounded-t-2xl sm:rounded-none
+          bg-white shadow-2xl z-[500] flex flex-col
           transition-transform duration-300 ease-in-out
-          ${open ? "translate-x-0" : "translate-x-full"}`}
+          ${open
+            ? "translate-y-0 sm:translate-y-0 sm:translate-x-0"
+            : "translate-y-full sm:translate-y-0 sm:translate-x-full"
+          }
+        `}
       >
+        {/* 드래그 핸들 — 모바일 전용 시각 표시 */}
+        <div className="sm:hidden flex justify-center pt-2.5 pb-1 shrink-0">
+          <div className="w-10 h-1 rounded-full bg-gray-300" />
+        </div>
+
         {dam && (
           <>
             {/* Header */}
-            <div className="flex items-start justify-between px-5 pt-5 pb-3 border-b border-gray-100 shrink-0">
+            <div className="flex items-start justify-between px-5 pt-3 sm:pt-5 pb-3 border-b border-gray-100 shrink-0">
               <div>
                 <h2 className="font-bold text-lg text-gray-900 leading-tight">{dam.damnm}</h2>
                 <p className="text-xs text-gray-400 mt-0.5">{dam.region} · {dam.suge}수계</p>
               </div>
               <button
                 onClick={onClose}
-                className="text-gray-400 hover:text-gray-600 transition-colors p-1 -mr-1 mt-0.5"
+                className="text-gray-400 hover:text-gray-600 transition-colors p-1 -mr-1 mt-0.5 min-w-[36px] min-h-[36px] flex items-center justify-center"
                 aria-label="닫기"
               >
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -97,10 +116,10 @@ export default function DamSidePanel({ dam, onClose }: DamSidePanelProps) {
             </div>
 
             {/* Footer */}
-            <div className="shrink-0 px-5 py-4 border-t border-gray-100">
+            <div className="shrink-0 px-5 py-4 border-t border-gray-100 pb-[max(1rem,env(safe-area-inset-bottom))]">
               <Link
                 href={`/dams/${encodeURIComponent(dam.damnm)}`}
-                className="block w-full text-center text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors rounded-lg py-2.5"
+                className="block w-full text-center text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors rounded-lg py-3"
               >
                 상세 페이지로 →
               </Link>

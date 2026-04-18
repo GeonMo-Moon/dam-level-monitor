@@ -35,7 +35,7 @@ export default function StorageGauge({ rsvrt }: StorageGaugeProps) {
     <div className="flex flex-col items-center gap-1">
       {/* Circular water tank */}
       <div
-        className="relative w-32 h-32 rounded-full overflow-hidden"
+        className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden"
         style={{
           boxShadow: `0 0 0 3px ${fillColor}30, 0 0 0 6px ${fillColor}10`,
           border: `3px solid ${fillColor}50`,
@@ -75,7 +75,7 @@ export default function StorageGauge({ rsvrt }: StorageGaugeProps) {
         {/* Center text */}
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
           <span
-            className="text-xl font-bold leading-tight"
+            className="text-base sm:text-xl font-bold leading-tight"
             style={{ color: fillColor }}
           >
             {rsvrt != null ? `${rsvrt.toFixed(1)}%` : "-"}
