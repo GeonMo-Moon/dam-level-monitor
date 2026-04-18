@@ -65,3 +65,67 @@ body {
 .dam-label::before {
   display: none !important;
 }
+
+/* ── Water wave animation ─────────────────────────────────── */
+@keyframes wave-flow {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.water-wave-anim {
+  animation: wave-flow 3s linear infinite;
+}
+
+/* ── Progress bar shimmer ─────────────────────────────────── */
+@keyframes shimmer-move {
+  from { transform: translateX(-150%); }
+  to   { transform: translateX(300%); }
+}
+
+.shimmer-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 100%
+  );
+  animation: shimmer-move 2.2s ease-in-out infinite;
+}
+
+/* ── Map marker pulse ring ────────────────────────────────── */
+@keyframes dam-pulse-ring {
+  0%   { transform: translate(-50%, -50%) scale(1);   opacity: 0.75; }
+  100% { transform: translate(-50%, -50%) scale(4);   opacity: 0; }
+}
+
+.dam-marker-wrap {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.dam-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2.5px solid white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+.dam-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: dam-pulse-ring 1.8s ease-out infinite;
+}
