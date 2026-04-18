@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { DamWithWaterLevel } from "@/types/dam";
 import { getStatusInfo } from "./StatusBadge";
-import { daysForKorea, formatSupply } from "@/lib/water-usage";
 
 interface DamCardGridProps {
   dams: DamWithWaterLevel[];
@@ -54,7 +53,6 @@ export default function DamCardGrid({ dams }: DamCardGridProps) {
         const textColor = textColorMap[color] ?? "text-gray-600";
         const pct = rsvrt != null ? Math.min(Math.max(rsvrt, 0), 100) : 0;
         const displayPct = mounted ? pct : 0;
-        const supply = formatSupply(daysForKorea(dam.current?.nowrsvwtqy ?? null));
 
         return (
           <Link
@@ -152,13 +150,6 @@ export default function DamCardGrid({ dams }: DamCardGridProps) {
                 </div>
               </div>
 
-              {/* Supply */}
-              {supply !== "-" && (
-                <div className="mt-3 pt-3 border-t border-gray-100 flex items-center gap-1.5">
-                  <span className="text-xs text-blue-500">💧</span>
-                  <span className="text-xs text-blue-600 font-medium">{supply} 공급 가능</span>
-                </div>
-              )}
             </div>
           </Link>
         );
