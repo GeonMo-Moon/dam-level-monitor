@@ -6,7 +6,8 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "전국 댐 현황",
-  description: "전국 21개 다목적댐의 수위, 저수율, 유입량, 방류량 전체 목록을 확인합니다.",
+  description: "전국 21개 다목적댐의 수위, 저수율, 유입량, 방류량 전체 목록. 가뭄·물 부족 대비 전국 댐 저수율 실시간 현황.",
+  keywords: ["전국 댐 현황", "댐 저수율", "가뭄", "물 부족", "수자원 현황", "댐 수위", "소양강댐", "충주댐", "안동댐", "다목적댐"],
   alternates: {
     canonical: "https://damlevelmonitor.vercel.app/dams",
   },

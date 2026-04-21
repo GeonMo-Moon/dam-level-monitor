@@ -18,13 +18,14 @@ export async function generateMetadata({
   const damnm = decodeURIComponent(damcode);
   return {
     title: `${damnm} 수위 현황`,
-    description: `${damnm}의 실시간 수위, 저수율, 유입량, 방류량을 확인합니다.`,
+    description: `${damnm}의 실시간 수위, 저수율, 유입량, 방류량을 확인합니다. 가뭄·홍수 대비 ${damnm} 물 부족 현황 및 저수율 실시간 조회.`,
+    keywords: [`${damnm}`, `${damnm} 수위`, `${damnm} 저수율`, `${damnm} 가뭄`, `${damnm} 물 부족`, "가뭄", "물 부족", "저수율", "댐 수위", "수자원"],
     alternates: {
       canonical: `https://damlevelmonitor.vercel.app/dams/${damcode}`,
     },
     openGraph: {
       title: `${damnm} 수위 현황`,
-      description: `${damnm}의 실시간 수위, 저수율, 유입량, 방류량을 확인합니다.`,
+      description: `${damnm}의 실시간 수위, 저수율, 유입량, 방류량을 확인합니다. 가뭄·홍수 대비 ${damnm} 물 부족 현황.`,
     },
   };
 }
